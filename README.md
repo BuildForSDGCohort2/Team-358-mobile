@@ -7,7 +7,7 @@ This is FASGD-III-Mobile .
 A participants in th Build4SDG Cohort-2 with facebook & andela we a building a Face/Voice recognition and gesture control security software.
 This is the mobile application for this project.
 
-#### Team members
+Team members
 
 | Name       |    Stack         |       Function                         |
 | ---------- | -----------------| ---------------------------------------|
