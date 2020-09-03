@@ -23,7 +23,7 @@ const SigninScreen = ({ navigation }) => {
     const { signIn } = React.useContext(AuthContext);
 
     const textInputChange = val => {
-        if (val.trim().length >= 4) {
+        if (/^[\S]+\.?[\d]?@{1}[\w]+\.\w{2,}$/gi.test(val)) {
             setData({
                 ...data,
                 email: val,
@@ -40,7 +40,7 @@ const SigninScreen = ({ navigation }) => {
         }
     };
     const handlePasswordChange = val => {
-        if (val.trim().length >= 4) {
+        if (val.trim().length >= 6) {
             setData({
                 ...data,
                 password: val,
@@ -73,7 +73,7 @@ const SigninScreen = ({ navigation }) => {
     };
 
     const handleValidEmail = val => {
-        if (val.trim().length >= 4) {
+        if (/^[\S]+\.?[\d]?@{1}[\w]+\.\w{2,}$/gi.test(val)) {
             setData({
                 ...data,
                 isValidEmail: true,
@@ -87,7 +87,7 @@ const SigninScreen = ({ navigation }) => {
     };
 
     const handleValidPassword = val => {
-        if (val.trim().length >= 4) {
+        if (val.trim().length >= 6) {
             setData({
                 ...data,
                 isValidPassword: true,
@@ -112,9 +112,9 @@ const SigninScreen = ({ navigation }) => {
                 <Text style={styles.text_footer}>Email</Text>
                 <View style={styles.action}>
                     <FontAwesome
-                        name='user' color='#05375a' size={20} />
+                        name='envelope' color='#05375a' size={20} />
                     <TextInput
-                        placeholder='Email Address'
+                        placeholder='Your Email Address'
                         style={styles.textInput}
                         onChangeText={val => textInputChange(val)}
                         onEndEditing={e => handleValidEmail(e.nativeEvent.text)}
@@ -146,7 +146,7 @@ const SigninScreen = ({ navigation }) => {
                     <Feather
                         name='lock' color='#05375a' size={20} />
                     <TextInput
-                        placeholder='Password'
+                        placeholder='Your Password'
                         style={styles.textInput}
                         secureTextEntry={data.secureTextEntry}
                         onChangeText={val => handlePasswordChange(val)}

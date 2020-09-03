@@ -11,7 +11,7 @@ Team members
 
 | Name       |    Stack         |       Function                         |
 | ---------- | -----------------| ---------------------------------------|
-| Chinedu    | Full-Stack       | `AI Development with python`           |
-| Adetunji   | Full-Stack       | `Frontend with React`                  |
-| Ugochukwu  | Full-Stack       | `Mobile Development with React-Native` |
-| Abiola     | Pyhthon beginner | `AI Development with python`           |
+| Chinedu    | Full-Stack Python| `AI Development with python`           |
+| Adetunji   | Full-Stack JS    | `Frontend with React`                  |
+| Ugochukwu  | Full-Stack JS    | `Mobile Development with React-Native` |
+| Abiola     | Pyhthon          | `AI Development with python`           |

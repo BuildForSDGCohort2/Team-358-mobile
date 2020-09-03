@@ -12,56 +12,85 @@ const RegisterScreen = ({ navigation }) => {
     const [data, setData] = useState({
         email: '',
         password: '',
-        fullName: '',
+        name: '',
         confirmPassword: '',
         check_nameInputChange: false,
         check_emailInputChange: false,
         secureTextEntry: true,
         secureConfirmTextEntry: true,
+        isValidName: true,
+        isValidEmail: true,
+        isValidPassword: true,
+        isValidPasswordMatch: true,
     });
+
+    const { signUp } = React.useContext(AuthContext);
+
     const emailInputChange = val => {
-        if (val.length !== 0) {
+        if (/^[\S]+\.?[\d]?@{1}[\w]+\.\w{2,}$/gi.test(val)) {
             setData({
                 ...data,
                 email: val,
                 check_emailInputChange: true,
+                isValidEmail: true,
             })
         } else {
             setData({
                 ...data,
                 email: val,
                 check_emailInputChange: false,
+                isValidEmail: false,
             })
         }
     };
 
     const handleNameInputChange = val => {
-        if (val.length !== 0) {
+        if (val.split(' ')[1]) {
             setData({
                 ...data,
                 name: val,
                 check_nameInputChange: true,
+                isValidName: true,
             })
         } else {
             setData({
                 ...data,
                 name: val,
                 check_nameInputChange: false,
+                isValidName: false
             })
         }
     };
 
     const handlePasswordChange = val => {
-        setData({
-            ...data,
-            password: val,
-        });
+        if (val.trim().length >= 6) {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: true,
+            });
+        } else {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: false,
+            })
+        }
     };
     const handleConfirmPasswordChange = val => {
-        setData({
-            ...data,
-            confirmPassword: val,
-        });
+        if (val === data.password) {
+            setData({
+                ...data,
+                confirmPassword: val,
+                isValidPasswordMatch: true,
+            });
+        } else {
+            setData({
+                ...data,
+                confirmPassword: val,
+                isValidPasswordMatch: false,
+            })
+        }
     };
 
     const updateSecureTextEntry = () => {
@@ -77,11 +106,36 @@ const RegisterScreen = ({ navigation }) => {
         })
     };
 
-    const { signUp } = React.useContext(AuthContext);
+    const handleValidEmail = val => {
+        if (/^[\S]+\.?[\d]?@{1}[\w]+\.\w{2,}$/gi.test(val)) {
+            setData({
+                ...data,
+                isValidEmail: true,
+            })
+        } else {
+            setData({
+                ...data,
+                isValidEmail: false,
+            })
+        }
+    };
 
     const handleSignUp = (name, email, password) => {
-        if (email && password) {
-            signUp(name, email, password);
+        if (name && email && password) {
+            if (name.split(' ')[1]) {
+                if (password === data.confirmPassword) {
+                    signUp(name, email, password);
+                } else {
+                    Alert.alert('Password mismatch', 'Please check that you have matched your password', [
+                        { text: 'Okay' }
+                    ]);
+                }
+                return
+            } else {
+                Alert.alert('Invalid Name', 'Please input your full name!', [
+                    { text: 'Okay' }
+                ]);
+            }
             return
         }
         Alert.alert('Invalid Fields', 'Fields can\'t be empty', [
@@ -104,7 +158,7 @@ const RegisterScreen = ({ navigation }) => {
                     <FontAwesome
                         name='user' color='#05375a' size={20} />
                     <TextInput
-                        placeholder='Full Name'
+                        placeholder='Enter Your Full Name'
                         style={styles.textInput}
                         onChangeText={val => handleNameInputChange(val)}
                     />
@@ -122,14 +176,21 @@ const RegisterScreen = ({ navigation }) => {
                     }
                 </View>
 
+                {data.isValidName ? null :
+                    <Animatable.View animation='fadeInLeft' duration={500}>
+                        <Text style={styles.errorMsg}>Please Enter Fullname</Text>
+                    </Animatable.View>
+                }
+
                 <Text style={styles.text_footer}>Email</Text>
                 <View style={styles.action}>
                     <FontAwesome
-                        name='user' color='#05375a' size={20} />
+                        name='envelope' color='#05375a' size={20} />
                     <TextInput
-                        placeholder='Email Address'
+                        placeholder='Enter Your Email Address'
                         style={styles.textInput}
                         onChangeText={val => emailInputChange(val)}
+                        onEndEditing={e => handleValidEmail(e.nativeEvent.text)}
                         autoCapitalize='none'
                     />
                     {data.check_emailInputChange ?
@@ -146,6 +207,12 @@ const RegisterScreen = ({ navigation }) => {
                     }
                 </View>
 
+                {data.isValidEmail ? null :
+                    <Animatable.View animation='fadeInLeft' duration={500}>
+                        <Text style={styles.errorMsg}>Use a valid email</Text>
+                    </Animatable.View>
+                }
+
                 <Text style={[styles.text_footer, {
                     marginTop: 35,
                 }]}>Password</Text>
@@ -153,7 +220,7 @@ const RegisterScreen = ({ navigation }) => {
                     <Feather
                         name='lock' color='#05375a' size={20} />
                     <TextInput
-                        placeholder='Password'
+                        placeholder='Set Password'
                         style={styles.textInput}
                         secureTextEntry={data.secureTextEntry}
                         onChangeText={val => handlePasswordChange(val)}
@@ -177,6 +244,12 @@ const RegisterScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
+                {data.isValidPassword ? null :
+                    <Animatable.View animation='fadeInLeft' duration={500}>
+                        <Text style={styles.errorMsg}>Must be at least 6 characters</Text>
+                    </Animatable.View>
+                }
+
                 <Text style={[styles.text_footer, {
                     marginTop: 35,
                 }]}>Confirm Password</Text>
@@ -184,7 +257,7 @@ const RegisterScreen = ({ navigation }) => {
                     <Feather
                         name='lock' color='#05375a' size={20} />
                     <TextInput
-                        placeholder='Confirm Password'
+                        placeholder='Confirm Your Password'
                         style={styles.textInput}
                         secureTextEntry={data.secureConfirmTextEntry}
                         onChangeText={val => handleConfirmPasswordChange(val)}
@@ -208,9 +281,15 @@ const RegisterScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
+                {data.isValidPasswordMatch ? null :
+                    <Animatable.View animation='fadeInLeft' duration={500}>
+                        <Text style={styles.errorMsg}>Must match your chosen password</Text>
+                    </Animatable.View>
+                }
+
                 <View style={styles.button}>
                     <TouchableOpacity
-                        onPress={() => { handleSignUp(data.fullName, data.email, data.password) }}>
+                        onPress={() => { handleSignUp(data.name, data.email, data.password) }}>
                         <LinearGradient
                             colors={['#482b57', '#1f1225']}
                             style={[styles.signIn, { width: width * 0.90 }]}
