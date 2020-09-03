@@ -3,15 +3,15 @@ const baseUrl = 'https://team358.herokuapp.com/';
 // Register User
 export const registerUser = async (name, email, password) => {
     try {
-        const response = await fetch(`${baseUrl}auth/register`, {
+        const response = await fetch(`${baseUrl}user/register`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ name, email, password })
         });
 
         if (response.ok) {
-            const { message } = await response.json();
-            return message;
+            const results = await response.json();
+            return results;
         } else {
             const { message } = await response.json();
             return message;
@@ -24,15 +24,15 @@ export const registerUser = async (name, email, password) => {
 // Login User
 export const loginUser = async (email, password) => {
     try {
-        const response = await fetch(`${baseUrl}auth/login`, {
+        const response = await fetch(`${baseUrl}user/login`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ email, password })
         });
 
         if (response.ok) {
-            const { message } = await response.json();
-            return message;
+            const { data } = await response.json();
+            return data;
         } else {
             const { message } = await response.json();
             return message;

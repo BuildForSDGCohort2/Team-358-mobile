@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Alert, AsyncStorage, StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -9,8 +9,6 @@ import { loginUser, registerUser } from './api/userApi';
 
 
 export default function App() {
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [userToken, setUserToken] = useState(null);
 
   const initialLoginState = {
     isLoading: true,
@@ -56,29 +54,23 @@ export default function App() {
     signIn: async (email, password) => {
       // setUserToken('asdfg');
       // setIsLoading(false);
-      let userToken;
-      userToken = null;
       const response = await loginUser(email, password)
-      console.log('Response:', response)
-      if (response.token) {
-        userToken = null;
+      if (response.userToken) {
+        let { userToken } = response;
+        dispatch({ type: 'LOGIN', id: email, token: userToken })
         try {
-          userToken = response.token;
           await AsyncStorage.setItem('userToken', userToken);
         } catch (err) {
           console.log(err)
         }
       } else {
-        Alert.alert('Invalid Credentials', response, [
+        Alert.alert('Access Denied', response, [
           { text: 'Okay' }
         ]);
         return
       }
-      dispatch({ type: 'LOGIN', id: email, token: userToken })
     },
     signOut: async () => {
-      // setUserToken(null);
-      // setIsLoading(false);
       try {
         await AsyncStorage.removeItem('userToken');
       } catch (err) {
@@ -87,17 +79,17 @@ export default function App() {
       dispatch({ type: 'LOGOUT', })
     },
     signUp: async (name, email, password) => {
-      // setUserToken('asdfg');
-      // setIsLoading(false);
-      let userToken;
-      userToken = null;
       const response = await registerUser(name, email, password)
-      console.log('Response:', response)
-      if (response.token) {
-        userToken = null;
+      if (response.data.userToken !== undefined && response.data.userToken !== null && response.data.userToken !== '') {
+        let { userToken } = response.data;
+        let { message } = response;
         try {
-          userToken = response.token;
           await AsyncStorage.setItem('userToken', userToken);
+          Alert.alert('Bravo!', message, [
+            { text: 'Okay' }
+          ]);
+          dispatch({ type: 'REGISTER', id: email, token: userToken })
+          return
         } catch (err) {
           console.log(err)
         }
@@ -108,20 +100,17 @@ export default function App() {
         ]);
         return
       }
-      dispatch({ type: 'LOGIN', id: email, token: userToken })
     },
   }), []);
 
   useEffect(() => {
     setTimeout(async () => {
-      // setIsLoading(false)
       let userToken = null;
       try {
         userToken = await AsyncStorage.getItem('userToken');
       } catch (err) {
         console.log(err)
       }
-      console.log('User Token:', userToken);
       dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
     }, 1000)
   }, []);
