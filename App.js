@@ -2,10 +2,10 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useMemo } from 'react';
 import { Alert, AsyncStorage, StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
-import RootStackScreen, { MainStackScreen } from './screens/RootStackScreen';
+import RootStackScreen from './screens/RootStackScreen';
 import { AuthContext } from './components/context';
 import { loginUser, registerUser } from './api/userApi';
+import DrawerNavigator from './screens/DrawerContent';
 
 
 export default function App() {
@@ -117,7 +117,7 @@ export default function App() {
 
   if (loginState.isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.container}>
         <ActivityIndicator size='large' />
       </View>
     );
@@ -127,7 +127,7 @@ export default function App() {
       <NavigationContainer>
         {
           loginState.userToken !== null ?
-            <MainStackScreen /> :
+            <DrawerNavigator /> :
             <RootStackScreen />
         }
       </NavigationContainer>
@@ -138,7 +138,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,17 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, StatusBar } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { AuthContext } from '../components/context';
+// import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+// import { AuthContext } from '../components/context';
 
 
 const DashboardScreen = ({ navigation }) => {
 
-    const { signOut } = React.useContext(AuthContext);
-
     return (
         <View style={styles.container}>
             <Text>Home Screen</Text>
-            <Button title='Signout' onPress={() => { signOut() }} />
+            <Button title='Goto Usder Details' onPress={() => navigation.navigate('UserDetails')} />
             <StatusBar style="auto" />
         </View>
     );
