@@ -1,27 +1,13 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
 
 import SigninScreen from './SigninScreen';
 import RegisterScreen from './RegisterScreen';
 import SplashScreen from './SplashScreen';
-import DashboardScreen from './DashboardScreen';
 
 
 const RootStack = createStackNavigator();
-
-const MainStack = createStackNavigator();
-
-export const MainStackScreen = () => {
-    return (
-        <MainStack.Navigator>
-            <MainStack.Screen name='Dashboard' component={DashboardScreen}
-                options={{ title: 'My Dashboard', headerTitleAlign: 'center' }} />
-        </MainStack.Navigator>
-    )
-}
 
 const RootStackScreen = () => {
     return (
