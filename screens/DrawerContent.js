@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { AsyncStorage, StyleSheet, View } from 'react-native';
 import {
     createDrawerNavigator,
     DrawerContentScrollView,
@@ -8,6 +8,7 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import { Avatar, Title, Caption, Drawer } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Ionicons } from '@expo/vector-icons'
 
 import MainTabScreen from './MainTabScreen';
 import SettingsScreen from './SettingsScreen';
@@ -56,6 +57,13 @@ const DrawerBarContent = (props) => {
                         />
                         <DrawerItem
                             icon={({ color, size }) => (
+                                <Icon name='camera-plus-outline' color={color} size={size} />
+                            )}
+                            label='Request'
+                            onPress={() => { }}
+                        />
+                        <DrawerItem
+                            icon={({ color, size }) => (
                                 <Icon name='information-outline' color={color} size={size} />
                             )}
                             label='App Info'
@@ -77,7 +85,7 @@ const DrawerBarContent = (props) => {
     )
 }
 
-const SettingsStackScreen = () => {
+const SettingsStackScreen = ({ navigation }) => {
     return (
         <SettingStack.Navigator screenOptions={{
             headerStyle: {
@@ -92,6 +100,11 @@ const SettingsStackScreen = () => {
                 options={{
                     title: 'Settings',
                     headerTitleAlign: 'center',
+                    headerLeft: () => (
+                        <Icon.Button name='arrow-left' size={26}
+                            backgroundColor='transparent'
+                            onPress={() => { navigation.goBack() }} />
+                    )
                 }}
             />
         </SettingStack.Navigator>

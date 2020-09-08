@@ -57,12 +57,13 @@ export default function App() {
       const response = await loginUser(email, password)
       if (response.userToken) {
         let { userToken } = response;
-        dispatch({ type: 'LOGIN', id: email, token: userToken })
         try {
           await AsyncStorage.setItem('userToken', userToken);
+          await AsyncStorage.setItem('name', response.name);
         } catch (err) {
           console.log(err)
         }
+        dispatch({ type: 'LOGIN', id: email, token: userToken })
       } else {
         Alert.alert('Access Denied', response, [
           { text: 'Okay' }
@@ -72,7 +73,7 @@ export default function App() {
     },
     signOut: async () => {
       try {
-        await AsyncStorage.removeItem('userToken');
+        await AsyncStorage.clear();
       } catch (err) {
         console.log(err)
       }

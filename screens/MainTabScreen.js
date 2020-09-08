@@ -29,7 +29,7 @@ export const DashboardStackScreen = ({ navigation }) => {
                     headerTitleAlign: 'center',
                     headerLeft: () => (
                         <Ionicons.Button name='ios-menu' size={26}
-                            backgroundColor='#291832'
+                            backgroundColor='transparent'
                             onPress={() => { navigation.openDrawer() }} />
                     )
                 }} />
