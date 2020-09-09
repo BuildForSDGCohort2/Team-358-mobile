@@ -8,16 +8,25 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import { Avatar, Title, Caption, Drawer } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Ionicons } from '@expo/vector-icons'
 
 import MainTabScreen from './MainTabScreen';
 import SettingsScreen from './SettingsScreen';
 import { AuthContext } from '../components/context';
 
 const DrawerBar = createDrawerNavigator();
-const SettingStack = createStackNavigator()
+const SettingStack = createStackNavigator();
 
 const DrawerBarContent = (props) => {
+    const [username, SetUsername] = React.useState('')
+
+    React.useEffect(() => {
+        const getNameAsyncStorage = async () => {
+            const getName = await AsyncStorage.getItem('name');
+            SetUsername(getName);
+        };
+        getNameAsyncStorage();
+
+    }, [])
 
     const { signOut } = React.useContext(AuthContext);
 
@@ -34,7 +43,7 @@ const DrawerBarContent = (props) => {
                                 size={50}
                             />
                             <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                                <Title style={styles.title}>Firstname Lastname</Title>
+                                <Title style={styles.title}>{username}</Title>
                                 <Caption style={styles.caption}>Welcome back</Caption>
                             </View>
                         </View>
@@ -78,7 +87,7 @@ const DrawerBarContent = (props) => {
                         <Icon name='exit-to-app' color={color} size={size} />
                     )}
                     label='Sign Out'
-                    onPress={() => { signOut() }}
+                    onPress={async () => { await signOut() }}
                 />
             </Drawer.Section>
         </View>
@@ -115,7 +124,8 @@ export default function DrawerNavigator() {
     return (
         <DrawerBar.Navigator drawerContent={props => <DrawerBarContent {...props} />}>
             <DrawerBar.Screen name="Home" component={MainTabScreen} />
-            <DrawerBar.Screen name="Settings" component={SettingsStackScreen} />
+            <SettingStack.Screen name="Settings" component={SettingsStackScreen} />
+            {/* <VideoFrameStack.Screen name='VideoFrame' component={VideoStackScreen} /> */}
         </DrawerBar.Navigator>
     );
 }

@@ -6,11 +6,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DashboardScreen from './DashboardScreen';
 import UserDetailsScreen from './UserDetailsScreen';
 import NotificationScreen from './NotificationScreen';
+import VideoFrameScreen from './VideoFrameScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 const DashboardStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
+const VideoFrameStack = createStackNavigator();
 
 export const DashboardStackScreen = ({ navigation }) => {
     return (
@@ -32,6 +34,11 @@ export const DashboardStackScreen = ({ navigation }) => {
                             backgroundColor='transparent'
                             onPress={() => { navigation.openDrawer() }} />
                     )
+                }} />
+            <VideoFrameStack.Screen name='VideoFrame' component={VideoFrameScreen}
+                options={{
+                    title: 'Live Stream',
+                    headerTitleAlign: 'center',
                 }} />
         </DashboardStack.Navigator>
     )
