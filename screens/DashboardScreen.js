@@ -1,19 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button, StatusBar, Image, Dimensions, TouchableOpacity } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity } from 'react-native';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import * as Animatable from 'react-native-animatable';
 import { FontAwesome, Feather } from '@expo/vector-icons';
-// import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-// import { AuthContext } from '../components/context';
 
 import headerImage from './../assets/headerImage.jpg';
+import { fetchVideoSream } from '../api/videoApi';
 
 const MIN_HEIGHT = 55;
 const MAX_HEIGHT = 222;
 
-const DashboardScreen = () => {
+const DashboardScreen = (props) => {
 
     const navTitleView = React.useRef(null);
+
+    const handleVideoStream = id => {
+        // const response = fetchVideoSream(id);
+        // const streamUrl = response.url;
+        const streamUrl = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+        props.navigation.navigate('VideoFrame', { url: streamUrl });
+    }
 
     return (
         <View style={styles.container}>
@@ -55,7 +61,7 @@ const DashboardScreen = () => {
                 <View style={styles.section}>
                     <View style={styles.cameras}>
                         <TouchableOpacity
-                            onPress={() => { }}
+                            onPress={handleVideoStream}
                             style={styles.cameraButton}>
                             <Text style={styles.buttonText}>Station Camera 1</Text>
                         </TouchableOpacity>

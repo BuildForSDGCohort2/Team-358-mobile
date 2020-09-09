@@ -6,6 +6,7 @@ import RootStackScreen from './screens/RootStackScreen';
 import { AuthContext } from './components/context';
 import { loginUser, registerUser } from './api/userApi';
 import DrawerNavigator from './screens/DrawerContent';
+import { loginReducer } from './reducers/loginReducer';
 
 
 export default function App() {
@@ -14,38 +15,6 @@ export default function App() {
     isLoading: true,
     email: null,
     userToken: null,
-  };
-
-  const loginReducer = (prevState, action) => {
-    switch (action.type) {
-      case 'RETRIEVE_TOKEN':
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case 'LOGIN':
-        return {
-          ...prevState,
-          email: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case 'LOGOUT':
-        return {
-          ...prevState,
-          email: null,
-          userToken: null,
-          isLoading: false,
-        };
-      case 'REGISTER':
-        return {
-          ...prevState,
-          email: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-    }
   };
 
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState)
@@ -86,6 +55,7 @@ export default function App() {
         let { message } = response;
         try {
           await AsyncStorage.setItem('userToken', userToken);
+          await AsyncStorage.setItem('name', response.data.name);
           Alert.alert('Bravo!', message, [
             { text: 'Okay' }
           ]);
