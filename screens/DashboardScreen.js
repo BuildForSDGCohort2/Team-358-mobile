@@ -14,11 +14,11 @@ const DashboardScreen = (props) => {
 
     const navTitleView = React.useRef(null);
 
-    const handleVideoStream = id => {
-        // const response = fetchVideoSream(id);
-        // const streamUrl = response.url;
-        const streamUrl = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-        props.navigation.navigate('VideoFrame', { url: streamUrl });
+    const handleVideoStream = async (id) => {
+        // const response = await fetchVideoSream(id);
+        // console.log(response);
+        const response = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+        props.navigation.navigate('VideoFrame', { url: response });
     }
 
     return (
@@ -47,17 +47,8 @@ const DashboardScreen = (props) => {
                     onHide={() => navTitleView.current.fadeInUp(200)}
                     onDisplay={() => navTitleView.current.fadeOut(100)}
                 >
-                    <Text style={styles.title}>Overview</Text>
+                    <Text style={styles.title}>Available Stations</Text>
                 </TriggeringView>
-                <View style={[styles.section, styles.sectionLarge]}>
-                    <Text style={styles.sectionContent}>
-                        The Live video feed below captures frame from the camera,
-                        perfoms a Facial Recognition, Gesture Recognition and takes in the users
-                        Input Voice for verification. If the input data is matched with the data on its data base,
-                        it Authenticates the user, and if NOT it sounds an alarm and sends the Frames of the
-                        Unidentified person to the Original User.
-                    </Text>
-                </View>
                 <View style={styles.section}>
                     <View style={styles.cameras}>
                         <TouchableOpacity
@@ -71,7 +62,7 @@ const DashboardScreen = (props) => {
                             <Text style={styles.buttonText}>Station Camera 2</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => { }}
+                            onPress={() => { props.navigation.navigate('RequestUpdate') }}
                             style={styles.cameraButton}>
                             <Text style={styles.buttonText}>Add Station</Text>
                             <FontAwesome name='plus-circle' color='#fff' size={26}

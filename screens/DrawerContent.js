@@ -12,9 +12,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MainTabScreen from './MainTabScreen';
 import SettingsScreen from './SettingsScreen';
 import { AuthContext } from '../components/context';
+import RequestStationScreen from './UpdateProfileAndRequestScreen';
 
 const DrawerBar = createDrawerNavigator();
 const SettingStack = createStackNavigator();
+const RequestUpdateStack = createStackNavigator();
 
 const DrawerBarContent = (props) => {
     const [username, SetUsername] = React.useState('')
@@ -69,7 +71,7 @@ const DrawerBarContent = (props) => {
                                 <Icon name='camera-plus-outline' color={color} size={size} />
                             )}
                             label='Request'
-                            onPress={() => { }}
+                            onPress={() => { props.navigation.navigate('RequestUpdate') }}
                         />
                         <DrawerItem
                             icon={({ color, size }) => (
@@ -120,11 +122,38 @@ const SettingsStackScreen = ({ navigation }) => {
     )
 }
 
+const RequestUpdateStackScreen = ({ navigation }) => {
+    return (
+        <RequestUpdateStack.Navigator screenOptions={{
+            headerStyle: {
+                backgroundColor: '#291832',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            }
+        }}>
+            <RequestUpdateStack.Screen name='RequestUpdate' component={RequestStationScreen}
+                options={{
+                    title: 'Add Station',
+                    headerTitleAlign: 'center',
+                    headerLeft: () => (
+                        <Icon.Button name='arrow-left' size={26}
+                            backgroundColor='transparent'
+                            onPress={() => { navigation.goBack() }} />
+                    )
+                }}
+            />
+        </RequestUpdateStack.Navigator>
+    )
+}
+
 export default function DrawerNavigator() {
     return (
         <DrawerBar.Navigator drawerContent={props => <DrawerBarContent {...props} />}>
             <DrawerBar.Screen name="Home" component={MainTabScreen} />
             <SettingStack.Screen name="Settings" component={SettingsStackScreen} />
+            <RequestUpdateStack.Screen name="RequestUpdate" component={RequestUpdateStackScreen} />
             {/* <VideoFrameStack.Screen name='VideoFrame' component={VideoStackScreen} /> */}
         </DrawerBar.Navigator>
     );

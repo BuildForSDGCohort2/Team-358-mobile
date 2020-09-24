@@ -29,6 +29,7 @@ export default function App() {
         try {
           await AsyncStorage.setItem('userToken', userToken);
           await AsyncStorage.setItem('name', response.name);
+          await AsyncStorage.setItem('email', response.email);
         } catch (err) {
           console.log(err)
         }

@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Drawer, Text, TouchableRipple, Switch } from 'react-native-paper';
+import { Switch, Text, TouchableRipple } from 'react-native-paper';
 
-const SettingsScreen = (props) => {
+
+const SettingsScreen = ({ navigation }) => {
+
     const [enableNonification, setEnableNotification] = React.useState(false);
     const [darkTheme, setDarkTheme] = React.useState(false);
 
@@ -11,43 +13,39 @@ const SettingsScreen = (props) => {
         console.log('Enable notification:', enableNonification)
     }
 
-    const toggleDarkTheme = () => {
-        setDarkTheme(!darkTheme);
-        console.log('Using dark theme:', darkTheme)
-    }
+    // const toggleDarkTheme = () => {
+    //     setDarkTheme(!darkTheme);
+    //     console.log('Using dark theme:', darkTheme)
+    // }
 
     return (
-        <View style={{ flex: 1 }}>
-            <View>
-                <View style={styles.settings}>
-                    <Drawer.Section title='Preferences'>
-                        <TouchableRipple onPress={() => { toggleNotification() }}>
-                            <View style={styles.preference}>
-                                <Text>Enable Notification</Text>
-                                <View pointerEvents='none'>
-                                    <Switch value={enableNonification} />
-                                </View>
-                            </View>
-                        </TouchableRipple>
-                        <TouchableRipple onPress={() => { toggleDarkTheme() }}>
-                            <View style={styles.preference}>
-                                <Text>Use Dark Theme</Text>
-                                <View pointerEvents='none'>
-                                    <Switch value={darkTheme} />
-                                </View>
-                            </View>
-                        </TouchableRipple>
-                    </Drawer.Section>
+        <View style={styles.container}>
+
+            <TouchableRipple onPress={() => { toggleNotification() }}>
+                <View style={styles.preference}>
+                    <Text>Enable Notification</Text>
+                    <View pointerEvents='none'>
+                        <Switch value={enableNonification} />
+                    </View>
                 </View>
-            </View>
+            </TouchableRipple>
+
+            {/* <TouchableRipple onPress={() => { toggleDarkTheme() }}>
+                <View style={styles.preference}>
+                    <Text>Use Dark Theme</Text>
+                    <View pointerEvents='none'>
+                        <Switch value={darkTheme} />
+                    </View>
+                </View>
+            </TouchableRipple> */}
         </View>
-    )
-}
+    );
+};
 
 export default SettingsScreen;
 
 const styles = StyleSheet.create({
-    settings: {
+    container: {
         flex: 1,
     },
     preference: {
