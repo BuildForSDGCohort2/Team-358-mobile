@@ -1,16 +1,63 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Switch, Text, TouchableRipple } from 'react-native-paper';
+import React, { useState } from 'react';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Switch, Text, TextInput, TouchableRipple } from 'react-native-paper';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
+import { fetchSavePushToken } from '../api/userApi';
 
 
 const SettingsScreen = ({ navigation }) => {
 
-    const [enableNonification, setEnableNotification] = React.useState(false);
-    const [darkTheme, setDarkTheme] = React.useState(false);
+    // const [enableNonification, setEnableNotification] = useState(false);
+    const [pushToken, setPushToken] = useState('')
+    // const [darkTheme, setDarkTheme] = useState(false);
+    const [useToken, setUseToken] = useState('');
 
     const toggleNotification = () => {
-        setEnableNotification(!enableNonification);
-        console.log('Enable notification:', enableNonification)
+        registerForPushNotificationsAsync()
+        // setEnableNotification(!enableNonification);
+    }
+
+    const registerForPushNotificationsAsync = async () => {
+        let token;
+        if (Constants.isDevice) {
+            const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                Alert.alert('Token Failed', 'Failed to get push token for push notification!', [
+                    { text: 'Ok' }
+                ]);
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+            setPushToken(token)
+            console.log(pushToken);
+        } else {
+            Alert.alert('No Device found', 'Must use physical device for Push Notifications', [
+                { text: 'Ok' }
+            ]);
+        }
+
+        // const response = await fetchSavePushToken(pushToken);
+        // if (response) {
+        //     console.log("Token save res:", response)
+        // }
+
+        if (Platform.OS === 'android') {
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        return token;
     }
 
     // const toggleDarkTheme = () => {
@@ -18,17 +65,43 @@ const SettingsScreen = ({ navigation }) => {
     //     console.log('Using dark theme:', darkTheme)
     // }
 
+    const sendNotification = async (expoPushToken) => {
+        const message = {
+            to: expoPushToken,
+            sound: 'default',
+            title: 'Unknown Face Detected',
+            body: 'FASGD-III has detected an unknown face at...',
+            data: { data: 'data goes here' },
+        };
+
+        await fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
+        });
+    };
+
+    const tokenChange = (val) => {
+        setUseToken(val)
+    }
     return (
         <View style={styles.container}>
 
             <TouchableRipple onPress={() => { toggleNotification() }}>
                 <View style={styles.preference}>
-                    <Text>Enable Notification</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Enable Push Notification</Text>
                     <View pointerEvents='none'>
-                        <Switch value={enableNonification} />
+                        {/* <Switch value={enableNonification} /> */}
                     </View>
                 </View>
             </TouchableRipple>
+            {pushToken ? <View style={styles.preference}>
+                <Text >Your device push token is: {pushToken}</Text>
+            </View> : null}
 
             {/* <TouchableRipple onPress={() => { toggleDarkTheme() }}>
                 <View style={styles.preference}>
@@ -38,6 +111,22 @@ const SettingsScreen = ({ navigation }) => {
                     </View>
                 </View>
             </TouchableRipple> */}
+
+            <TouchableOpacity onPress={() => sendNotification(useToken)}>
+                <View style={styles.button}>
+                    <Text style={styles.buttonText}>Send Notification</Text>
+                </View>
+            </TouchableOpacity>
+
+            <View style={styles.preference}>
+                <TextInput
+                    placeholder="Enter target device's pushToken"
+                    style={styles.textInput}
+                    value={useToken ? useToken : pushToken}
+                    onChangeText={val => tokenChange(val)}
+                    autoCapitalize='none'
+                />
+            </View>
         </View>
     );
 };
@@ -53,5 +142,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 12,
         paddingHorizontal: 16,
+    },
+    button: {
+        backgroundColor: '#291832',
+        padding: 10,
+        paddingHorizontal: 40,
+        marginVertical: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 15,
+    },
+    textInput: {
+        flex: 1,
+        marginTop: -12,
+        paddingLeft: 10,
+        color: '#05375a',
     },
 });

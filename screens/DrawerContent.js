@@ -13,10 +13,12 @@ import MainTabScreen from './MainTabScreen';
 import SettingsScreen from './SettingsScreen';
 import { AuthContext } from '../components/context';
 import RequestStationScreen from './UpdateProfileAndRequestScreen';
+// import VideoFrameScreen from './VideoFrameScreen';
 
 const DrawerBar = createDrawerNavigator();
 const SettingStack = createStackNavigator();
 const RequestUpdateStack = createStackNavigator();
+const VideoFrameStack = createStackNavigator();
 
 const DrawerBarContent = (props) => {
     const [username, SetUsername] = React.useState('')
@@ -121,6 +123,32 @@ const SettingsStackScreen = ({ navigation }) => {
         </SettingStack.Navigator>
     )
 }
+
+// const VideoStackScreen = ({ navigation }) => {
+//     return (
+//         <VideoFrameStack.Navigator screenOptions={{
+//             headerStyle: {
+//                 backgroundColor: '#291832',
+//             },
+//             headerTintColor: '#fff',
+//             headerTitleStyle: {
+//                 fontWeight: 'bold',
+//             }
+//         }}>
+//             <VideoFrameStack.Screen name='RequestUpdate' component={VideoFrameScreen}
+//                 options={{
+//                     title: 'Live Stream Video',
+//                     headerTitleAlign: 'center',
+//                     headerLeft: () => (
+//                         <Icon.Button name='arrow-left' size={26}
+//                             backgroundColor='transparent'
+//                             onPress={() => { navigation.goBack() }} />
+//                     )
+//                 }}
+//             />
+//         </VideoFrameStack.Navigator>
+//     )
+// }
 
 const RequestUpdateStackScreen = ({ navigation }) => {
     return (

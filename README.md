@@ -4,14 +4,14 @@
 
 This is FASGD-III-Mobile .
 
-A participants in th Build4SDG Cohort-2 with facebook & andela we a building a Face/Voice recognition and gesture control security software.
+Participants in th Build4SDG Cohort-2 with facebook & andela we a building a Face/Voice recognition and gesture control security software.
 This is the mobile application for this project.
 
 Team members
 
-| Name       |    Stack         |       Function                         |
-| ---------- | -----------------| ---------------------------------------|
-| Chinedu    | Full-Stack Python| `AI Development with python`           |
-| Adetunji   | Full-Stack JS    | `Frontend with React`                  |
-| Ugochukwu  | Full-Stack JS    | `Mobile Development with React-Native` |
-| Abiola     | Pyhthon          | `AI Development with python`           |
+| Name                  |    Stack         |       Function                         |
+| --------------------- | -----------------| ---------------------------------------|
+| Ugochukwu Umeoke      | Full-Stack JS    | `Mobile Development with React-Native` |
+| Mbonu Chinedu         | AI with Python   | `AI Development with python`           |
+| Adetunji Oluwaferanmi | Full-Stack JS    | `Backend with NodeJS`                  |
+| Abiola Fagbemi        | AI Pyhthon       | `AI Development with python`           |

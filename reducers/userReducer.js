@@ -29,3 +29,14 @@ export const loginReducer = (prevState, action) => {
             };
     }
 };
+
+export const updateReducer = (prevState, action) => {
+    switch (action.type) {
+        case 'UPDATE':
+            return {
+                ...prevState,
+                email: action.id,
+                isLoading: false,
+            };
+    }
+};

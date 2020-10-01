@@ -6,7 +6,7 @@ import RootStackScreen from './screens/RootStackScreen';
 import { AuthContext } from './components/context';
 import { loginUser, registerUser } from './api/userApi';
 import DrawerNavigator from './screens/DrawerContent';
-import { loginReducer } from './reducers/loginReducer';
+import { loginReducer } from './reducers/userReducer';
 
 
 export default function App() {
@@ -21,8 +21,6 @@ export default function App() {
 
   const authContext = useMemo(() => ({
     signIn: async (email, password) => {
-      // setUserToken('asdfg');
-      // setIsLoading(false);
       const response = await loginUser(email, password)
       if (response.userToken) {
         let { userToken } = response;

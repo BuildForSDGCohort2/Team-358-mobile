@@ -146,7 +146,7 @@ const RegisterScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor='#533164' barStyle='light-content' />
+            <StatusBar backgroundColor='#261228' barStyle='light-content' />
             <View style={styles.header}>
                 <Text style={styles.text_header}>Register</Text>
             </View>

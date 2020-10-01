@@ -17,10 +17,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "useNextNotificationsApi": true
     },
     "description": "",
     "githubUrl": "https://github.com/BuildForSDGCohort2/Team-358-mobile"
