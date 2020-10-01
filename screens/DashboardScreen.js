@@ -5,7 +5,8 @@ import * as Animatable from 'react-native-animatable';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 
 import headerImage from './../assets/headerImage.jpg';
-import { fetchVideoSream } from '../api/videoApi';
+import { fetchOneVideoClip, fetchVideoStreams } from '../api/videoApi';
+import { ActivityIndicator } from 'react-native-paper';
 
 const MIN_HEIGHT = 55;
 const MAX_HEIGHT = 222;
@@ -14,16 +15,29 @@ const DashboardScreen = (props) => {
 
     const navTitleView = React.useRef(null);
 
-    const handleVideoStream = async (id) => {
-        // const response = await fetchVideoSream(id);
+    const [streams, setStreams] = React.useState([])
+    const [isLoading, setIsLoading] = React.useState(true)
+
+    React.useEffect(() => {
+        const getAllStreams = async () => {
+            const response = await fetchVideoStreams();
+            // console.log("Video streams:", response)
+            setStreams(response);
+            setIsLoading(false);
+        }
+        getAllStreams();
+    }, [])
+
+    const handleVideoStream = async (url) => {
+        // const response = await fetchOneVideoClip(id);
         // console.log(response);
-        const response = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-        props.navigation.navigate('VideoFrame', { url: response });
+        // const response = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+        props.navigation.navigate('VideoFrame', { url });
     }
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle='light-content' />
+            <StatusBar backgroundColor='#261228' barStyle='light-content' />
             <HeaderImageScrollView
                 minHeight={MIN_HEIGHT}
                 maxHeight={MAX_HEIGHT}
@@ -43,7 +57,7 @@ const DashboardScreen = (props) => {
                     </Animatable.View>
                 )}
             >
-                <TriggeringView style={styles.section}
+                <TriggeringView style={[styles.section, { borderBottomWidth: 1, borderBottomColor: '#ccc', }]}
                     onHide={() => navTitleView.current.fadeInUp(200)}
                     onDisplay={() => navTitleView.current.fadeOut(100)}
                 >
@@ -51,25 +65,27 @@ const DashboardScreen = (props) => {
                 </TriggeringView>
                 <View style={styles.section}>
                     <View style={styles.cameras}>
-                        <TouchableOpacity
-                            onPress={handleVideoStream}
-                            style={styles.cameraButton}>
-                            <Text style={styles.buttonText}>Station Camera 1</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => { }}
-                            style={styles.cameraButton}>
-                            <Text style={styles.buttonText}>Station Camera 2</Text>
-                        </TouchableOpacity>
+                        {isLoading ? <View style={styles.container}>
+                            <ActivityIndicator size='large' />
+                        </View> :
+                            streams.map((stream, num) =>
+                                <TouchableOpacity key={stream._id}
+                                    onPress={() => handleVideoStream(stream.url)}
+                                    style={styles.cameraButton}>
+                                    <Text style={styles.buttonText}>Frame {num + 1}</Text>
+                                </TouchableOpacity>
+                            )}
+
                         <TouchableOpacity
                             onPress={() => { props.navigation.navigate('RequestUpdate') }}
                             style={styles.cameraButton}>
                             <Text style={styles.buttonText}>Add Station</Text>
                             <FontAwesome name='plus-circle' color='#fff' size={26}
-                                style={{ alignSelf: 'center', marginLeft: 12 }}
+                                style={{ alignSelf: 'center', marginLeft: 8 }}
                             />
                         </TouchableOpacity>
                     </View>
+
                 </View>
             </HeaderImageScrollView>
         </View>
@@ -97,9 +113,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     section: {
+        alignItems: 'center',
         padding: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+
         backgroundColor: 'white',
     },
     sectionTitle: {
@@ -117,11 +133,13 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     cameraButton: {
+        justifyContent: 'center',
         flexDirection: 'row',
         backgroundColor: '#533164',
         borderRadius: 20,
-        height: 130,
-        margin: 10,
+        height: 60,
+        width: width / 3,
+        margin: 12,
         padding: 10,
         paddingHorizontal: 15,
     },

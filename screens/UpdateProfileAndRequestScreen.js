@@ -15,6 +15,13 @@ const RequestStationScreen = ({ navigation }) => {
     const { color } = useTheme();
 
     const [username, SetUsername] = React.useState('');
+    const [data, setData] = React.useState({
+        name: '',
+        phone: '',
+        stations: '',
+        city: '',
+        country: '',
+    });
 
     React.useEffect(() => {
         const getNameAsyncStorage = async () => {
