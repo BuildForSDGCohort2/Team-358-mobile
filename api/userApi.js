@@ -1,4 +1,5 @@
-const baseUrl = 'https://team358.herokuapp.com/';
+import { AsyncStorage } from "react-native";
+const baseUrl = "https://team358.herokuapp.com/";
 
 // Register User
 export const registerUser = async (name, email, password) => {
@@ -45,7 +46,7 @@ export const loginUser = async (email, password) => {
 // Update User
 export const requestUpdate = async (name, phone, stations, city, country) => {
     try {
-        const response = await fetch(`${baseUrl}user/register`, {
+        const response = await fetch(`${baseUrl}user/update`, {
             method: "PUT",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ name, phone, stations, city, country })
@@ -64,20 +65,28 @@ export const requestUpdate = async (name, phone, stations, city, country) => {
 }
 
 export const fetchSavePushToken = async (pushToken) => {
+    const token = await AsyncStorage.getItem("userToken");
+    const id = await AsyncStorage.getItem("userid");
     try {
-        const response = await fetch(`${baseUrl}pushtoken/user/:id`, {
-            method: "PUT",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ pushToken })
+        const response = await fetch(`${baseUrl}user/saveToken`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "Authorization": token
+            },
+            body: JSON.stringify({
+                id: id,
+                token: pushToken
+            })
         });
         if (response.ok) {
-            const { data } = await response.json();
-            return data;
-        } else {
             const { message } = await response.json();
             return message;
+        } else {
+            const data = await response.json();
+            return data;
         }
     } catch (error) {
-        throw new Error(error);
+        console.log("Error occured:", error);
     }
 }

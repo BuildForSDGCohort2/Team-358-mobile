@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { Ionicons } from '@expo/vector-icons'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as React from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import DashboardScreen from './DashboardScreen';
-import UserDetailsScreen from './UserDetailsScreen';
-import NotificationScreen from './NotificationScreen';
-import VideoFrameScreen from './VideoFrameScreen';
-import RequestStationScreen from './UpdateProfileAndRequestScreen'
+import DashboardScreen from "./DashboardScreen";
+import UserDetailsScreen from "./UserDetailsScreen";
+import NotificationScreen from "./NotificationScreen";
+import VideoFrameScreen from "./VideoFrameScreen";
+import RequestStationScreen from "./UpdateProfileAndRequestScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 const DashboardStack = createStackNavigator();
@@ -20,27 +20,27 @@ export const DashboardStackScreen = ({ navigation }) => {
     return (
         <DashboardStack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#291832',
+                backgroundColor: "#291832",
             },
-            headerTintColor: '#fff',
+            headerTintColor: "#fff",
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontWeight: "bold",
             }
         }}>
-            <DashboardStack.Screen name='Dashboard' component={DashboardScreen}
+            <DashboardStack.Screen name="Dashboard" component={DashboardScreen}
                 options={{
-                    title: '',
-                    headerTitleAlign: 'center',
+                    title: "",
+                    headerTitleAlign: "center",
                     headerLeft: () => (
-                        <Ionicons.Button name='ios-menu' size={26}
-                            backgroundColor='transparent'
+                        <Ionicons.Button name="ios-menu" size={26}
+                            backgroundColor="transparent"
                             onPress={() => { navigation.openDrawer() }} />
                     )
                 }} />
-            <VideoFrameStack.Screen name='VideoFrame' component={VideoFrameScreen}
+            <VideoFrameStack.Screen name="VideoFrame" component={VideoFrameScreen}
                 options={{
-                    title: 'Live Stream',
-                    headerTitleAlign: 'center',
+                    title: "Live Stream",
+                    headerTitleAlign: "center",
                 }} />
         </DashboardStack.Navigator>
     )
@@ -50,33 +50,33 @@ export const DetailsStackScreen = ({ navigation }) => {
     return (
         <DetailsStack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#291832',
+                backgroundColor: "#291832",
             },
-            headerTintColor: '#fff',
+            headerTintColor: "#fff",
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontWeight: "bold",
             }
         }}>
-            <DetailsStack.Screen name='UserDetails' component={UserDetailsScreen}
+            <DetailsStack.Screen name="UserDetails" component={UserDetailsScreen}
                 options={{
-                    title: 'My Profile',
-                    headerTitleAlign: 'center',
+                    title: "My Profile",
+                    headerTitleAlign: "center",
                     headerLeft: () => (
-                        <Ionicons.Button name='ios-menu' size={26}
-                            backgroundColor='#291832'
+                        <Ionicons.Button name="ios-menu" size={26}
+                            backgroundColor="#291832"
                             onPress={() => { navigation.openDrawer() }} />
                     ),
                     headerRight: () => (
                         <Icon.Button
-                            name='account-edit'
-                            backgroundColor='#291832' color='#fff' size={26}
-                            onPress={() => { navigation.navigate('UpdateProfile') }} />
+                            name="account-edit"
+                            backgroundColor="#291832" color="#fff" size={26}
+                            onPress={() => { navigation.navigate("UpdateProfile") }} />
                     ),
                 }} />
-            <DetailsStack.Screen name='UpdateProfile' component={RequestStationScreen}
+            <DetailsStack.Screen name="UpdateProfile" component={RequestStationScreen}
                 options={{
-                    title: 'Request Stations',
-                    headerTitleAlign: 'center',
+                    title: "Request Stations",
+                    headerTitleAlign: "center",
 
                 }} />
         </DetailsStack.Navigator>
@@ -87,20 +87,20 @@ export const NotificationStackScreen = ({ navigation }) => {
     return (
         <NotificationStack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#291832',
+                backgroundColor: "#291832",
             },
-            headerTintColor: '#fff',
+            headerTintColor: "#fff",
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontWeight: "bold",
             }
         }}>
-            <NotificationStack.Screen name='Notifications' component={NotificationScreen}
+            <NotificationStack.Screen name="Notifications" component={NotificationScreen}
                 options={{
-                    title: 'Notifications',
-                    headerTitleAlign: 'center',
+                    title: "Notifications",
+                    headerTitleAlign: "center",
                     headerLeft: () => (
-                        <Ionicons.Button name='ios-menu' size={26}
-                            backgroundColor='#291832'
+                        <Ionicons.Button name="ios-menu" size={26}
+                            backgroundColor="#291832"
                             onPress={() => { navigation.openDrawer() }} />
                     )
                 }} />
@@ -119,8 +119,8 @@ export default function MainTabScreen() {
                 name="Dashboard"
                 component={DashboardStackScreen}
                 options={{
-                    tabBarLabel: 'Home',
-                    tabBarColor: '#291832',
+                    tabBarLabel: "Home",
+                    tabBarColor: "#291832",
                     tabBarIcon: ({ color }) => (
                         <Ionicons name="ios-home" color={color} size={26} />
                     ),
@@ -130,8 +130,8 @@ export default function MainTabScreen() {
                 name="Notifications"
                 component={NotificationStackScreen}
                 options={{
-                    tabBarLabel: 'Alerts',
-                    tabBarColor: '#291832',
+                    tabBarLabel: "Alerts",
+                    tabBarColor: "#291832",
                     tabBarIcon: ({ color }) => (
                         <Ionicons name="ios-notifications" color={color} size={26} />
                     ),
@@ -141,8 +141,8 @@ export default function MainTabScreen() {
                 name="UserDetails"
                 component={DetailsStackScreen}
                 options={{
-                    tabBarLabel: 'Profile',
-                    tabBarColor: '#291832',
+                    tabBarLabel: "Profile",
+                    tabBarColor: "#291832",
                     tabBarIcon: ({ color }) => (
                         <Ionicons name="ios-person" color={color} size={26} />
                     ),

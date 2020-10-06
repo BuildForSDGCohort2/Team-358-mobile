@@ -1,11 +1,11 @@
-import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { Video } from 'expo-av';
-// import VideoPlayer from 'expo-video-player'
-// import * as ScreenOrientation from 'expo-screen-orientation';
+import React from "react";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Video } from "expo-av";
+// import VideoPlayer from "expo-video-player"
+// import * as ScreenOrientation from "expo-screen-orientation";
 
 
-const { width, height } = Dimensions.get('screen');
+const { width, height } = Dimensions.get("screen");
 
 export default function VideoFrameScreen({ route }) {
 
@@ -22,7 +22,7 @@ export default function VideoFrameScreen({ route }) {
                 volume={1.0}
                 isMuted={false}
                 resizeMode={Video.RESIZE_MODE_CONTAIN}
-                shouldPlay={false}
+                shouldPlay
                 isLooping={false}
                 useNativeControls={true}
                 // switchToLandscape={changeScreenOrientation}
@@ -35,9 +35,9 @@ export default function VideoFrameScreen({ route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#000'
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#000"
     },
     video: {
         width,

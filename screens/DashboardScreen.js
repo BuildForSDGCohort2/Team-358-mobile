@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity } from 'react-native';
-import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
-import * as Animatable from 'react-native-animatable';
-import { FontAwesome, Feather } from '@expo/vector-icons';
+import * as React from "react";
+import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity } from "react-native";
+import HeaderImageScrollView, { TriggeringView } from "react-native-image-header-scroll-view";
+import * as Animatable from "react-native-animatable";
+import { FontAwesome, Feather } from "@expo/vector-icons";
 
-import headerImage from './../assets/headerImage.jpg';
-import { fetchOneVideoClip, fetchVideoStreams } from '../api/videoApi';
-import { ActivityIndicator } from 'react-native-paper';
+import headerImage from "./../assets/headerImage.jpg";
+import { fetchOneVideoClip, fetchVideoStreams } from "../api/videoApi";
+import { ActivityIndicator } from "react-native-paper";
 
 const MIN_HEIGHT = 55;
 const MAX_HEIGHT = 222;
@@ -21,7 +21,6 @@ const DashboardScreen = (props) => {
     React.useEffect(() => {
         const getAllStreams = async () => {
             const response = await fetchVideoStreams();
-            // console.log("Video streams:", response)
             setStreams(response);
             setIsLoading(false);
         }
@@ -31,13 +30,13 @@ const DashboardScreen = (props) => {
     const handleVideoStream = async (url) => {
         // const response = await fetchOneVideoClip(id);
         // console.log(response);
-        // const response = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-        props.navigation.navigate('VideoFrame', { url });
+        // const response = "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4";
+        props.navigation.navigate("VideoFrame", { url });
     }
 
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor='#261228' barStyle='light-content' />
+            <StatusBar backgroundColor="#261228" barStyle="light-content" />
             <HeaderImageScrollView
                 minHeight={MIN_HEIGHT}
                 maxHeight={MAX_HEIGHT}
@@ -57,7 +56,7 @@ const DashboardScreen = (props) => {
                     </Animatable.View>
                 )}
             >
-                <TriggeringView style={[styles.section, { borderBottomWidth: 1, borderBottomColor: '#ccc', }]}
+                <TriggeringView style={[styles.section, { borderBottomWidth: 1, borderBottomColor: "#ccc", }]}
                     onHide={() => navTitleView.current.fadeInUp(200)}
                     onDisplay={() => navTitleView.current.fadeOut(100)}
                 >
@@ -66,7 +65,7 @@ const DashboardScreen = (props) => {
                 <View style={styles.section}>
                     <View style={styles.cameras}>
                         {isLoading ? <View style={styles.container}>
-                            <ActivityIndicator size='large' />
+                            <ActivityIndicator size="large" />
                         </View> :
                             streams.map((stream, num) =>
                                 <TouchableOpacity key={stream._id}
@@ -77,11 +76,11 @@ const DashboardScreen = (props) => {
                             )}
 
                         <TouchableOpacity
-                            onPress={() => { props.navigation.navigate('RequestUpdate') }}
+                            onPress={() => { props.navigation.navigate("RequestUpdate") }}
                             style={styles.cameraButton}>
                             <Text style={styles.buttonText}>Add Station</Text>
-                            <FontAwesome name='plus-circle' color='#fff' size={26}
-                                style={{ alignSelf: 'center', marginLeft: 8 }}
+                            <FontAwesome name="plus-circle" color="#fff" size={26}
+                                style={{ alignSelf: "center", marginLeft: 8 }}
                             />
                         </TouchableOpacity>
                     </View>
@@ -94,7 +93,7 @@ const DashboardScreen = (props) => {
 
 export default DashboardScreen;
 
-const { height, width } = Dimensions.get('screen');
+const { height, width } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
     container: {
@@ -103,39 +102,39 @@ const styles = StyleSheet.create({
     image: {
         height: 222,
         width,
-        alignSelf: 'stretch',
-        resizeMode: 'cover',
+        alignSelf: "stretch",
+        resizeMode: "cover",
     },
     title: {
         fontSize: 30,
     },
     name: {
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     section: {
-        alignItems: 'center',
+        alignItems: "center",
         padding: 20,
 
-        backgroundColor: 'white',
+        backgroundColor: "white",
     },
     sectionTitle: {
         fontSize: 25,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     sectionContent: {
         fontSize: 20,
-        textAlign: 'justify',
+        textAlign: "justify",
     },
     cameras: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexWrap: 'wrap',
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        flexWrap: "wrap",
     },
     cameraButton: {
-        justifyContent: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#533164',
+        justifyContent: "center",
+        flexDirection: "row",
+        backgroundColor: "#533164",
         borderRadius: 20,
         height: 60,
         width: width / 3,
@@ -145,31 +144,31 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 16,
-        color: '#fff',
-        alignSelf: 'center',
+        color: "#fff",
+        alignSelf: "center",
     },
     titleContainer: {
         flex: 1,
-        alignSelf: 'stretch',
-        justifyContent: 'center',
-        alignItems: 'center',
+        alignSelf: "stretch",
+        justifyContent: "center",
+        alignItems: "center",
     },
     imageTitle: {
-        color: 'white',
-        backgroundColor: 'transparent',
+        color: "white",
+        backgroundColor: "transparent",
         fontSize: 24,
     },
     navTitleView: {
         height: MIN_HEIGHT,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         paddingTop: 5,
         opacity: 0,
     },
     navTitle: {
-        color: 'white',
+        color: "white",
         fontSize: 18,
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
     },
     sectionLarge: {
         minHeight: 300,
