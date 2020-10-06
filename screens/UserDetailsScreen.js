@@ -1,20 +1,20 @@
-import React from 'react';
-import { StyleSheet, View, Button, StatusBar, AsyncStorage } from 'react-native';
-import { Avatar, Title, Caption, Text, TouchableRipple } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { StyleSheet, View, Button, StatusBar, AsyncStorage } from "react-native";
+import { Avatar, Title, Caption, Text, TouchableRipple } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { AuthContext } from '../components/context';
+import { AuthContext } from "../components/context";
 
 
 const UserDetailsScreen = ({ navigation }) => {
 
-    const [username, SetUsername] = React.useState('');
-    const [email, setEmail] = React.useState('');
+    const [username, SetUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
 
     React.useEffect(() => {
         const getNameAsyncStorage = async () => {
-            const getName = await AsyncStorage.getItem('name');
-            const getEmail = await AsyncStorage.getItem('email');
+            const getName = await AsyncStorage.getItem("name");
+            const getEmail = await AsyncStorage.getItem("email");
             SetUsername(getName);
             setEmail(getEmail);
         };
@@ -25,10 +25,10 @@ const UserDetailsScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.userInfoSection}>
-                <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                <View style={{ flexDirection: "row", marginTop: 15 }}>
                     <Avatar.Image
                         source={{
-                            uri: 'https://api.adorable.io/avatars/51/abott@adorable.png'
+                            uri: "https://p.kindpng.com/picc/s/78-785827_user-profile-avatar-login-account-male-user-icon.png"
                         }}
                         size={80}
                     />
@@ -44,21 +44,21 @@ const UserDetailsScreen = ({ navigation }) => {
             <StatusBar style="auto" />
             <View style={styles.userInfoSection}>
                 <View style={styles.row}>
-                    <Icon name='map-marker-radius' size={20} color='#777' />
-                    <Text style={{ color: '#777', marginLeft: 20 }}>Lagos, Nigeria</Text>
+                    <Icon name="map-marker-radius" size={20} color="#777" />
+                    <Text style={{ color: "#777", marginLeft: 20 }}>Lagos, Nigeria</Text>
                 </View>
                 <View style={styles.row}>
-                    <Icon name='phone' size={20} color='#777' />
-                    <Text style={{ color: '#777', marginLeft: 20 }}>010574568</Text>
+                    <Icon name="phone" size={20} color="#777" />
+                    <Text style={{ color: "#777", marginLeft: 20 }}>010574568</Text>
                 </View>
                 <View style={styles.row}>
-                    <Icon name='email' size={20} color='#777' />
-                    <Text style={{ color: '#777', marginLeft: 20 }}>{email}</Text>
+                    <Icon name="email" size={20} color="#777" />
+                    <Text style={{ color: "#777", marginLeft: 20 }}>{email}</Text>
                 </View>
             </View>
 
             <View style={styles.infoBoxWrapper}>
-                <View style={[styles.infoBox, { borderRightColor: '#ddd', borderRightWidth: 1 }]}>
+                <View style={[styles.infoBox, { borderRightColor: "#ddd", borderRightWidth: 1 }]}>
                     <Text>3</Text>
                     <Caption>Stations</Caption>
                 </View>
@@ -71,13 +71,13 @@ const UserDetailsScreen = ({ navigation }) => {
             <View style={styles.menuWrapper}>
                 <TouchableRipple onPress={() => { }}>
                     <View style={styles.menuItem}>
-                        <Icon name='star-outline' color='#ff6347' size={25} />
+                        <Icon name="star-outline" color="#ff6347" size={25} />
                         <Text style={styles.menuItemText}>Rate this app</Text>
                     </View>
                 </TouchableRipple>
                 <TouchableRipple onPress={() => { }}>
                     <View style={styles.menuItem}>
-                        <Icon name='share-outline' color='#ff6347' size={25} />
+                        <Icon name="share-outline" color="#ff6347" size={25} />
                         <Text style={styles.menuItemText}>Share this app</Text>
                     </View>
                 </TouchableRipple>
@@ -85,13 +85,13 @@ const UserDetailsScreen = ({ navigation }) => {
 
             <TouchableRipple onPress={() => { }}>
                 <View style={styles.menuItem}>
-                    <Icon name='account-check-outline' color='#ff6347' size={25} />
+                    <Icon name="account-check-outline" color="#ff6347" size={25} />
                     <Text style={styles.menuItemText}>Support</Text>
                 </View>
             </TouchableRipple>
             <TouchableRipple onPress={() => { }}>
                 <View style={styles.menuItem}>
-                    <Icon name='settings-outline' color='#ff6347' size={25} />
+                    <Icon name="settings-outline" color="#ff6347" size={25} />
                     <Text style={styles.menuItemText}>Settings</Text>
                 </View>
             </TouchableRipple>
@@ -111,42 +111,42 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     caption: {
         fontSize: 14,
         lineHeight: 14,
-        fontWeight: '500',
+        fontWeight: "500",
     },
     row: {
-        flexDirection: 'row',
+        flexDirection: "row",
         marginBottom: 10,
     },
     infoBoxWrapper: {
-        borderBottomColor: '#dddddd',
+        borderBottomColor: "#dddddd",
         borderBottomWidth: 1,
-        borderTopColor: '#dddddd',
+        borderTopColor: "#dddddd",
         borderTopWidth: 1,
-        flexDirection: 'row',
+        flexDirection: "row",
         height: 100,
     },
     infoBox: {
-        width: '50%',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: "50%",
+        alignItems: "center",
+        justifyContent: "center",
     },
     menuWrapper: {
         marginTop: 10,
     },
     menuItem: {
-        flexDirection: 'row',
+        flexDirection: "row",
         paddingVertical: 15,
         paddingHorizontal: 30,
     },
     menuItemText: {
-        color: '#777777',
+        color: "#777777",
         marginLeft: 20,
-        fontWeight: '600',
+        fontWeight: "600",
         fontSize: 16,
         lineHeight: 26,
     },
